@@ -45,6 +45,22 @@
         "institution": "Universidade Exemplo",
         "period": "2017 — 2021"
       }
+    ],
+    "certificates": [
+      {
+        "name": "Certificado Exemplo de Nuvem",
+        "issuer": "Plataforma Exemplo",
+        "date": "2024",
+        "url": "https://example.com/",
+        "imageUrl": "images/certificates/certificado-exemplo.svg"
+      },
+      {
+        "name": "Curso Exemplo de Angular",
+        "issuer": "Escola Exemplo",
+        "date": "2023",
+        "url": "",
+        "imageUrl": ""
+      }
     ]
   },
   "projects": [

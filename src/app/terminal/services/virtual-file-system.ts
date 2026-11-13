@@ -4,7 +4,14 @@ import { TERMINAL_CONFIG } from '../../core/config/terminal.config';
 import type { Profile, Project } from '../../core/models/portfolio.model';
 import type { OutputBlock } from '../../core/models/terminal.model';
 import { PortfolioStore } from '../../core/state/portfolio-store';
-import { aboutContent, contactContent, Out, readmeContent, resumeContent } from '../output';
+import {
+  aboutContent,
+  certificatesContent,
+  contactContent,
+  Out,
+  readmeContent,
+  resumeContent,
+} from '../output';
 
 export interface FsFile {
   kind: 'file';
@@ -33,6 +40,7 @@ export type FsNode = FsFile | FsDirectory;
  *         ├── README.md
  *         ├── sobre.txt
  *         ├── curriculo.txt
+ *         ├── certificados.txt
  *         ├── contato.txt
  *         └── projetos/
  *             └── <slug-do-projeto>
@@ -174,6 +182,7 @@ function buildTree(profile: Profile, projects: Project[]): FsDirectory {
     file('README.md', readmeContent),
     file('sobre.txt', () => aboutContent(profile)),
     file('curriculo.txt', () => resumeContent(profile)),
+    file('certificados.txt', () => certificatesContent(profile)),
     file('contato.txt', () => contactContent(profile)),
     dir(TERMINAL_CONFIG.projectsDir, projectFiles),
   ]);

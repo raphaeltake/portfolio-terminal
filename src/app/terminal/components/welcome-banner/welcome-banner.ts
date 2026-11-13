@@ -42,5 +42,13 @@ export class WelcomeBanner {
   readonly run = output<string>();
 
   protected readonly art = ASCII_ART;
-  protected readonly shortcuts = ['help', 'sobre', 'projetos', 'curriculo', 'contato', 'ls'];
+  protected readonly shortcuts = [
+    'help',
+    'sobre',
+    'projetos',
+    'curriculo',
+    'certificados',
+    'contato',
+    'ls',
+  ];
 }

@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" font-family="ui-monospace, Menlo, Consolas, monospace">
+  <rect width="600" height="400" fill="#050806"/>
+  <rect x="16" y="16" width="568" height="368" rx="6" fill="#0a100c" stroke="#2d4d37" stroke-width="2"/>
+  <rect x="28" y="28" width="544" height="344" rx="4" fill="none" stroke="#1c2e22" stroke-dasharray="6 6"/>
+  <text x="300" y="92" fill="#7dffa0" font-size="30" font-weight="700" text-anchor="middle" letter-spacing="6">CERTIFICADO</text>
+  <text x="300" y="132" fill="#7c9886" font-size="14" text-anchor="middle">certificamos que</text>
+  <text x="300" y="176" fill="#d4f7dd" font-size="26" font-weight="700" text-anchor="middle">Seu Nome</text>
+  <line x1="170" y1="190" x2="430" y2="190" stroke="#2d4d37"/>
+  <text x="300" y="222" fill="#7c9886" font-size="14" text-anchor="middle">concluiu com êxito o curso</text>
+  <text x="300" y="254" fill="#b0ffc4" font-size="18" text-anchor="middle">Certificado Exemplo de Nuvem</text>
+  <text x="70" y="336" fill="#7c9886" font-size="12">Plataforma Exemplo · 2024</text>
+  <circle cx="500" cy="318" r="34" fill="none" stroke="#3fae63" stroke-width="2"/>
+  <circle cx="500" cy="318" r="26" fill="none" stroke="#3fae63" stroke-dasharray="3 4"/>
+  <text x="500" y="324" fill="#7dffa0" font-size="16" font-weight="700" text-anchor="middle">&gt;_</text>
+</svg>

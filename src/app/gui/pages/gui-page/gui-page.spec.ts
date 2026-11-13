@@ -46,6 +46,41 @@ describe('GuiPage', () => {
     expect(nav).toContain('contato');
   });
 
+  it('mostra a seção de certificados com o link da credencial', async () => {
+    const el = await render();
+    const section = el.querySelector('#certificados');
+
+    expect(el.querySelector('nav')?.textContent).toContain('certificados');
+    expect(section?.textContent).toContain('Cálculo de Diferenças');
+    expect(section?.textContent).toContain('Royal Society');
+    expect(section?.querySelector('a[href="https://exemplo.com/certificado"]')).not.toBeNull();
+    expect(section?.querySelector('app-zoomable-image img')?.getAttribute('src')).toBe(
+      'images/certificado.png',
+    );
+  });
+
+  it('não mostra imagem em certificado sem imagem', async () => {
+    const store = TestBed.inject(PortfolioStore);
+    const [certificate] = store.profile().certificates;
+    await store.updateProfile({
+      ...store.profile(),
+      certificates: [{ ...certificate, imageUrl: '' }],
+    });
+    const el = await render();
+
+    expect(el.querySelector('#certificados')?.textContent).toContain('Cálculo de Diferenças');
+    expect(el.querySelector('#certificados app-zoomable-image')).toBeNull();
+  });
+
+  it('esconde a seção de certificados quando não há nenhum', async () => {
+    const store = TestBed.inject(PortfolioStore);
+    await store.updateProfile({ ...store.profile(), certificates: [] });
+    const el = await render();
+
+    expect(el.querySelector('#certificados')).toBeNull();
+    expect(el.querySelector('nav')?.textContent).not.toContain('certificados');
+  });
+
   it('tem o botão para voltar ao terminal', async () => {
     const el = await render();
     expect(el.querySelector('app-view-toggle button')).not.toBeNull();

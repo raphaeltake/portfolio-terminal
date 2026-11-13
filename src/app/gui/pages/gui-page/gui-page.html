@@ -135,6 +135,39 @@
       </section>
     }
 
+    <!-- Certificados -->
+    @if (profile().certificates.length) {
+      <section id="certificados" class="scroll-mt-24 space-y-4" aria-labelledby="gui-certificados">
+        <h2 id="gui-certificados" class="section-title text-lg">certificados</h2>
+        <ul class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          @for (item of profile().certificates; track $index) {
+            <li class="panel flex flex-col gap-1 p-4">
+              @if (item.imageUrl) {
+                <app-zoomable-image class="mb-2" [src]="item.imageUrl" [alt]="item.name" />
+              }
+              <h3 class="font-bold text-primary">{{ item.name }}</h3>
+              @if (item.issuer) {
+                <p>{{ item.issuer }}</p>
+              }
+              @if (item.date) {
+                <p class="text-xs text-muted">{{ item.date }}</p>
+              }
+              @if (item.url) {
+                <a
+                  class="link mt-auto pt-2 text-sm"
+                  [href]="item.url"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  ↗ ver credencial
+                </a>
+              }
+            </li>
+          }
+        </ul>
+      </section>
+    }
+
     <!-- Projetos -->
     <section id="projetos" class="scroll-mt-24 space-y-4" aria-labelledby="gui-projetos">
       <h2 id="gui-projetos" class="section-title text-lg">projetos</h2>

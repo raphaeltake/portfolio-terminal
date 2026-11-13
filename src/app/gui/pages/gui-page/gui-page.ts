@@ -3,6 +3,7 @@ import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/c
 import { PortfolioStore } from '../../../core/state/portfolio-store';
 import { ProjectCard } from '../../../shared/components/project-card/project-card';
 import { ViewToggle } from '../../../shared/components/view-toggle/view-toggle';
+import { ZoomableImage } from '../../../shared/components/zoomable-image/zoomable-image';
 
 interface Section {
   id: string;
@@ -13,7 +14,7 @@ interface Section {
 @Component({
   selector: 'app-gui-page',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ProjectCard, ViewToggle],
+  imports: [ProjectCard, ViewToggle, ZoomableImage],
   templateUrl: './gui-page.html',
 })
 export class GuiPage {
@@ -33,6 +34,7 @@ export class GuiPage {
   protected readonly sections = computed<Section[]>(() => [
     { id: 'sobre', label: 'sobre' },
     ...(this.hasCareer() ? [{ id: 'carreira', label: 'carreira' }] : []),
+    ...(this.profile().certificates.length ? [{ id: 'certificados', label: 'certificados' }] : []),
     { id: 'projetos', label: 'projetos' },
     ...(this.hasContact() ? [{ id: 'contato', label: 'contato' }] : []),
   ]);

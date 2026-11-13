@@ -171,9 +171,84 @@
     }
   </section>
 
-  <!-- Ações -->
+  <!-- Certificados -->
+  <section class="space-y-3" formArrayName="certificates">
+    <div class="flex items-center justify-between gap-3">
+      <h2 class="section-title">certificados</h2>
+      <button type="button" class="btn btn-sm" (click)="addCertificate()">+ certificado</button>
+    </div>
+    @for (
+      group of certificates.controls;
+      track group;
+      let i = $index, first = $first, last = $last
+    ) {
+      <div class="panel space-y-3 p-3" [formGroupName]="i">
+        <div class="grid gap-3 sm:grid-cols-3">
+          <app-form-field label="nome" [error]="errorOf(group.controls.name)">
+            <input class="input" formControlName="name" placeholder="AWS Cloud Practitioner" />
+          </app-form-field>
+          <app-form-field label="emissor">
+            <input class="input" formControlName="issuer" placeholder="Amazon Web Services" />
+          </app-form-field>
+          <app-form-field label="data">
+            <input class="input" formControlName="date" placeholder="mar/2024" />
+          </app-form-field>
+        </div>
+        <app-form-field
+          label="link da credencial"
+          hint="Opcional. Página onde o certificado pode ser validado."
+          [error]="errorOf(group.controls.url)"
+        >
+          <input class="input" formControlName="url" placeholder="https://..." />
+        </app-form-field>
+        <div class="field">
+          <span class="field-label">imagem do certificado</span>
+          <app-image-input
+            formControlName="imageUrl"
+            placeholder="https://... ou images/certificates/certificado.png"
+            [maxWidth]="1000"
+          />
+          <span class="field-hint">
+            Opcional. Clicar na imagem amplia. Uploads ficam no navegador (limite ~5 MB no total);
+            para muitos certificados, prefira arquivos em public/images/certificates.
+          </span>
+          @if (errorOf(group.controls.imageUrl); as error) {
+            <span class="field-error">{{ error }}</span>
+          }
+        </div>
+        <div class="flex flex-wrap justify-end gap-2">
+          <button
+            type="button"
+            class="btn btn-sm"
+            [disabled]="first"
+            (click)="move(certificates, i, -1)"
+            aria-label="Mover para cima"
+          >
+            ↑
+          </button>
+          <button
+            type="button"
+            class="btn btn-sm"
+            [disabled]="last"
+            (click)="move(certificates, i, 1)"
+            aria-label="Mover para baixo"
+          >
+            ↓
+          </button>
+          <button type="button" class="btn btn-sm btn-danger" (click)="remove(certificates, i)">
+            remover
+          </button>
+        </div>
+      </div>
+    } @empty {
+      <p class="text-sm text-muted">Nenhum certificado cadastrado.</p>
+    }
+  </section>
+
+  <!-- Ações. O bottom negativo compensa o padding da área com scroll (p-4 / sm:p-6);
+       com bottom-0 a barra parava acima da borda e o conteúdo aparecia por baixo dela. -->
   <div
-    class="sticky bottom-0 -mx-4 flex flex-wrap items-center justify-end gap-3 border-t border-line bg-surface px-4 py-3 sm:-mx-6 sm:px-6"
+    class="sticky -bottom-4 z-10 -mx-4 flex flex-wrap items-center justify-end gap-3 border-t border-line bg-surface px-4 py-3 sm:-bottom-6 sm:-mx-6 sm:px-6"
   >
     <app-feedback-message class="mr-auto" [message]="feedback.message()" />
     <button type="button" class="btn" [disabled]="form.pristine || saving()" (click)="discard()">

@@ -54,7 +54,9 @@ import { imageFileToDataUrl } from '../../../core/utils/browser.utils';
           />
         }
         <div class="flex flex-wrap gap-2">
-          <label class="btn btn-sm" [class.pointer-events-none]="disabled() || loading()">
+          <!-- relative: prende o input .sr-only (absolute) ao rótulo; sem isso ele é posicionado
+               em relação à página e, dentro de uma área com scroll, estica o documento. -->
+          <label class="btn btn-sm relative" [class.pointer-events-none]="disabled() || loading()">
             {{ loading() ? 'processando...' : '⇪ enviar arquivo' }}
             <input
               class="sr-only"

@@ -1,8 +1,15 @@
-import { aboutContent, contactContent, Out, projectListContent, resumeContent } from '../output';
+import {
+  aboutContent,
+  certificatesContent,
+  contactContent,
+  Out,
+  projectListContent,
+  resumeContent,
+} from '../output';
 import { Command, CommandContext, CommandOutput, CompletionContext } from './command';
 import { levenshtein } from '../../core/utils/text.utils';
 
-/** Comandos de conteúdo do portfólio: sobre, currículo, contato e projetos. */
+/** Comandos de conteúdo do portfólio: sobre, currículo, certificados, contato e projetos. */
 
 export class AboutCommand extends Command {
   readonly name = 'sobre';
@@ -21,6 +28,16 @@ export class ResumeCommand extends Command {
 
   execute(ctx: CommandContext): CommandOutput {
     return resumeContent(ctx.store.profile());
+  }
+}
+
+export class CertificatesCommand extends Command {
+  readonly name = 'certificados';
+  readonly description = 'Lista meus certificados e cursos.';
+  override readonly aliases = ['certificates', 'certs'];
+
+  execute(ctx: CommandContext): CommandOutput {
+    return certificatesContent(ctx.store.profile());
   }
 }
 

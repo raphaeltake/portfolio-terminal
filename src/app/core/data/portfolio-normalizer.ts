@@ -1,4 +1,5 @@
 import {
+  Certificate,
   Education,
   Experience,
   PORTFOLIO_DATA_VERSION,
@@ -28,6 +29,7 @@ export const EMPTY_PROFILE: Profile = {
   links: [],
   experiences: [],
   education: [],
+  certificates: [],
 };
 
 export const EMPTY_PORTFOLIO: PortfolioData = {
@@ -80,6 +82,10 @@ export function normalizeProfile(input: unknown): Profile {
       .filter((link) => link.url),
     experiences: arr(raw['experiences']).map(normalizeExperience),
     education: arr(raw['education']).map(normalizeEducation),
+    // Dados salvos antes dos certificados existirem não têm o campo: vira lista vazia.
+    certificates: arr(raw['certificates'])
+      .map(normalizeCertificate)
+      .filter((item) => item.name),
   };
 }
 
@@ -119,5 +125,16 @@ function normalizeEducation(input: unknown): Education {
     course: str(raw['course']),
     institution: str(raw['institution']),
     period: str(raw['period']),
+  };
+}
+
+function normalizeCertificate(input: unknown): Certificate {
+  const raw = obj(input);
+  return {
+    name: str(raw['name']),
+    issuer: str(raw['issuer']),
+    date: str(raw['date']),
+    url: str(raw['url']),
+    imageUrl: str(raw['imageUrl']),
   };
 }

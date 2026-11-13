@@ -3,6 +3,7 @@ import { CatCommand, CdCommand, LsCommand, PwdCommand } from './filesystem.comma
 import { EditInfoCommand, SudoCommand } from './hidden.commands';
 import {
   AboutCommand,
+  CertificatesCommand,
   ContactCommand,
   ProjectsCommand,
   ResumeCommand,
@@ -26,6 +27,7 @@ export function createCommands(): Command[] {
     new HelpCommand(),
     new AboutCommand(),
     new ResumeCommand(),
+    new CertificatesCommand(),
     new ProjectsCommand(),
     new ViewProjectCommand(),
     new ContactCommand(),

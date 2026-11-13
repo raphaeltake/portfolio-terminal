@@ -82,6 +82,10 @@
     <app-resume-view [profile]="b.profile" />
   }
 
+  @case ('certificates') {
+    <app-certificates-view [certificates]="b.certificates" />
+  }
+
   @case ('banner') {
     <app-welcome-banner [profile]="b.profile" (run)="run.emit($event)" />
   }

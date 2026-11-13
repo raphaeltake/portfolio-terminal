@@ -16,6 +16,15 @@ export function samplePortfolio(): PortfolioData {
       links: [{ label: 'GitHub', url: 'https://github.com/ada' }],
       experiences: [],
       education: [],
+      certificates: [
+        {
+          name: 'Cálculo de Diferenças',
+          issuer: 'Royal Society',
+          date: '1843',
+          url: 'https://exemplo.com/certificado',
+          imageUrl: 'images/certificado.png',
+        },
+      ],
     },
     projects: [
       {

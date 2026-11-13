@@ -34,7 +34,8 @@ import { Feedback } from '../../../shared/utils/feedback';
       <div class="panel space-y-3 p-4">
         <h3 class="font-bold text-primary">importar</h3>
         <p class="text-sm text-muted">Substitui todos os dados atuais pelo conteúdo do arquivo.</p>
-        <label class="btn btn-sm">
+        <!-- relative: mantém o input .sr-only dentro da área com scroll (ver image-input). -->
+        <label class="btn btn-sm relative">
           ⇪ escolher arquivo .json
           <input
             class="sr-only"

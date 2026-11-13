@@ -1,4 +1,4 @@
-import type { Profile, Project, SocialLink } from '../core/models/portfolio.model';
+import type { Certificate, Profile, Project, SocialLink } from '../core/models/portfolio.model';
 import type {
   ListBlock,
   ListItem,
@@ -31,6 +31,10 @@ export const Out = {
   project: (project: Project): OutputBlock => ({ type: 'project', project }),
   profile: (profile: Profile): OutputBlock => ({ type: 'profile', profile }),
   resume: (profile: Profile): OutputBlock => ({ type: 'resume', profile }),
+  certificates: (certificates: Certificate[]): OutputBlock => ({
+    type: 'certificates',
+    certificates,
+  }),
   banner: (profile: Profile): OutputBlock => ({ type: 'banner', profile }),
 };
 
@@ -45,6 +49,12 @@ export function aboutContent(profile: Profile): OutputBlock[] {
 
 export function resumeContent(profile: Profile): OutputBlock[] {
   return [Out.resume(profile)];
+}
+
+export function certificatesContent(profile: Profile): OutputBlock[] {
+  return profile.certificates.length
+    ? [Out.certificates(profile.certificates)]
+    : [Out.muted('Nenhum certificado cadastrado ainda.')];
 }
 
 export function contactContent(profile: Profile): OutputBlock[] {

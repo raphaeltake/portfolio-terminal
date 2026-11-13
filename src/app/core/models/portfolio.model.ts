@@ -19,6 +19,19 @@ export interface Education {
   period: string;
 }
 
+/** Certificado ou curso livre (comando `certificados` e seção da GUI). */
+export interface Certificate {
+  name: string;
+  /** Quem emitiu: Alura, AWS, Coursera... */
+  issuer: string;
+  /** Data de emissão em texto livre: "2024", "mar/2024". */
+  date: string;
+  /** Link para validar a credencial (opcional). */
+  url: string;
+  /** Imagem do certificado: http/https, caminho em /public ou data URL (opcional). */
+  imageUrl: string;
+}
+
 /** Informações pessoais editáveis pelo painel administrativo. */
 export interface Profile {
   name: string;
@@ -33,6 +46,7 @@ export interface Profile {
   links: SocialLink[];
   experiences: Experience[];
   education: Education[];
+  certificates: Certificate[];
 }
 
 /** Projeto exibido pelo comando `visualizar-projeto`. */

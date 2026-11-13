@@ -14,6 +14,17 @@ describe('normalizePortfolioData', () => {
     expect(data.projects[0].tags).toEqual([]);
   });
 
+  it('aceita dados antigos sem certificados e descarta certificados sem nome', () => {
+    expect(normalizePortfolioData({ profile: {} }).profile.certificates).toEqual([]);
+
+    const data = normalizePortfolioData({
+      profile: { certificates: [{ name: 'AWS', issuer: 'Amazon', extra: 1 }, { issuer: 'X' }] },
+    });
+    expect(data.profile.certificates).toEqual([
+      { name: 'AWS', issuer: 'Amazon', date: '', url: '', imageUrl: '' },
+    ]);
+  });
+
   it('evita slugs duplicados', () => {
     const data = normalizePortfolioData({
       projects: [{ title: 'App' }, { title: 'App' }, { slug: 'app' }],

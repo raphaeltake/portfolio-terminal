@@ -42,7 +42,7 @@ src/
     ├── shared/                 # reutilizável em qualquer feature
     │   ├── components/         # terminal-window, project-card, form-field, image-input,
     │   │                       # prompt-label, command-chip, confirm-button, feedback-message,
-    │   │                       # view-toggle
+    │   │                       # view-toggle, zoomable-image
     │   ├── directives/         # autofocus
     │   └── utils/              # Feedback (estado de mensagens), validadores e mensagens de erro
     ├── terminal/               # feature: o terminal
@@ -102,7 +102,8 @@ src/
 | --- | --- | --- |
 | `help [comando]` | `ajuda`, `?` | lista comandos públicos ou detalha um |
 | `sobre` | `whoami` | apresentação, habilidades e links |
-| `curriculo` | `cv`, `resume` | experiência, formação, habilidades, link do PDF |
+| `curriculo` | `cv`, `resume` | experiência, formação, certificados, habilidades, link do PDF |
+| `certificados` | `certificates`, `certs` | certificados: nome, emissor, data e link da credencial |
 | `projetos` | `projects` | lista projetos (clicáveis) |
 | `visualizar-projeto <nome>` | `vp`, `ver` | imagem, título, descrição e link do projeto |
 | `contato` | `contact` | e-mail e links |
@@ -123,7 +124,7 @@ Atalhos: `Tab` autocompleta (comandos, caminhos e slugs), `↑/↓` histórico, 
 - O `TerminalSession` é `providedIn: 'root'`, então a saída e o histórico do terminal
   continuam lá ao voltar da GUI.
 - A GUI lê o mesmo `PortfolioStore` e reutiliza `app-project-card`. O efeito `.crt-overlay`
-  fica desligado nela.
+  fica desligado nela. Seções vazias (carreira, certificados, contato) somem da página e do menu.
 - Navegação interna da GUI usa `scrollIntoView`, **não** `href="#secao"`: com
   `<base href="/">` o link resolveria para `/#secao` e voltaria ao terminal.
 
@@ -133,7 +134,7 @@ Derivado do `PortfolioStore` (projetos criados no painel aparecem automaticament
 
 ```
 /home/visitante  (~)
-├── README.md  sobre.txt  curriculo.txt  contato.txt
+├── README.md  sobre.txt  curriculo.txt  certificados.txt  contato.txt
 └── projetos/<slug-de-cada-projeto>
 ```
 
@@ -173,9 +174,21 @@ Para um backend real (API própria, Firebase, Supabase...): crie classes que est
 `PortfolioRepository` e `AuthService` e troque os providers em `app.config.ts` — nenhum
 componente precisa mudar.
 
+### Certificados
+
+- `Profile.certificates` (`Certificate`: `name`, `issuer`, `date`, `url`, `imageUrl`), editados
+  no painel (aba perfil, seção certificados). Aparecem em `certificados`, `cat certificados.txt`,
+  `curriculo` e na seção da GUI.
+- `imageUrl` aceita URL, caminho em `public/` (ex.: `images/certificates/x.png`) ou upload via
+  `app-image-input` (redimensionado para 1000 px). É exibida com `app-zoomable-image`: miniatura
+  3:2 que abre a imagem ampliada em um `<dialog>` nativo (Esc ou clique fecham).
+- Dados salvos antes da existência do campo são normalizados para `[]`; certificados sem
+  nome são descartados pelo `normalizePortfolioData`.
+
 ### Imagens
 
-- Seed: arquivos em `public/images/projects/` referenciados como `images/projects/x.svg`.
+- Seed: arquivos em `public/images/projects/` referenciados como `images/projects/x.svg`
+  (certificados: `public/images/certificates/`).
 - Painel: URL (http/https ou caminho relativo) ou upload — o upload é redimensionado
   (`imageFileToDataUrl`) e salvo como data URL. O `localStorage` tem ~5 MB; prefira URLs
   ou arquivos em `public/` para o conteúdo publicado.
@@ -188,6 +201,9 @@ componente precisa mudar.
 - Dados externos (seed, import, localStorage) sempre passam por `normalizePortfolioData`.
 - Sem `window.confirm/alert`: use `app-confirm-button` e `Feedback` + `app-feedback-message`.
 - Formulários: envolva campos em `app-form-field` e use `errorOf(control)` para a mensagem.
+- Elemento `.sr-only` (ex.: `<input type="file">` escondido dentro de um `<label class="btn">`)
+  precisa de um ancestral `relative`. Sem ele, o `absolute` é posicionado em relação à página
+  e, dentro das áreas com scroll do terminal/painel, cria uma barra de rolagem na página.
 - Textos de UI em pt-BR, tom de terminal (minúsculas em rótulos, `[ abas ]`, `## títulos`).
 - Testes ficam ao lado do código (`*.spec.ts`); use `InMemoryPortfolioRepository`
   (`src/testing/portfolio-fixtures.ts`) para testar sem `localStorage`/HTTP.

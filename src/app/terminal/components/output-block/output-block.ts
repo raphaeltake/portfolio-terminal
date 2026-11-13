@@ -3,6 +3,7 @@ import { ChangeDetectionStrategy, Component, input, output } from '@angular/core
 import type { ListItemKind, OutputBlock } from '../../../core/models/terminal.model';
 import { CommandChip } from '../../../shared/components/command-chip/command-chip';
 import { ProjectCard } from '../../../shared/components/project-card/project-card';
+import { CertificatesView } from '../certificates-view/certificates-view';
 import { ProfileView } from '../profile-view/profile-view';
 import { ResumeView } from '../resume-view/resume-view';
 import { WelcomeBanner } from '../welcome-banner/welcome-banner';
@@ -18,7 +19,7 @@ const KIND_CLASS: Record<ListItemKind, string> = {
 @Component({
   selector: 'app-output-block',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommandChip, ProjectCard, ProfileView, ResumeView, WelcomeBanner],
+  imports: [CertificatesView, CommandChip, ProjectCard, ProfileView, ResumeView, WelcomeBanner],
   host: { class: 'block' },
   templateUrl: './output-block.html',
 })

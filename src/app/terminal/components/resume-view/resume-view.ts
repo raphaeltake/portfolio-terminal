@@ -1,11 +1,13 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 
 import type { Profile } from '../../../core/models/portfolio.model';
+import { CertificatesView } from '../certificates-view/certificates-view';
 
 /** Saída do comando `curriculo`. */
 @Component({
   selector: 'app-resume-view',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [CertificatesView],
   template: `
     <section class="max-w-3xl space-y-5">
       <header class="border-b border-dashed border-line-strong pb-3">
@@ -59,6 +61,13 @@ import type { Profile } from '../../../core/models/portfolio.model';
               <p class="text-xs text-muted">{{ item.period }}</p>
             </article>
           }
+        </div>
+      }
+
+      @if (profile().certificates.length) {
+        <div class="space-y-3">
+          <h3 class="section-title">certificados</h3>
+          <app-certificates-view [certificates]="profile().certificates" />
         </div>
       }
 

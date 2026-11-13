@@ -97,6 +97,26 @@ describe('TerminalSession', () => {
     expect(texts(await run('cat projetos'))).toContain('É um diretório');
   });
 
+  it('certificados lista os certificados do perfil (comando, apelido e arquivo)', async () => {
+    for (const line of ['certificados', 'certs', 'cat certificados.txt']) {
+      const [block] = await run(line);
+      expect(block.type).toBe('certificates');
+      if (block.type === 'certificates') {
+        expect(block.certificates[0]).toMatchObject({
+          name: 'Cálculo de Diferenças',
+          imageUrl: 'images/certificado.png',
+        });
+      }
+    }
+    expect(texts(await run('ls'))).toContain('certificados.txt');
+  });
+
+  it('certificados avisa quando não há nenhum', async () => {
+    await store.updateProfile({ ...store.profile(), certificates: [] });
+    const output = await run('certificados');
+    expect(output[0]).toMatchObject({ type: 'text', tone: 'muted' });
+  });
+
   it('projetos criados no store aparecem no sistema de arquivos', async () => {
     await store.saveProject({
       id: 'novo',

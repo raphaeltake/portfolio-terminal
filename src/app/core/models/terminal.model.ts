@@ -1,4 +1,4 @@
-import type { Profile, Project, SocialLink } from './portfolio.model';
+import type { Certificate, Profile, Project, SocialLink } from './portfolio.model';
 
 /** Tons de cor disponíveis para blocos de texto (classes `.tone-*`). */
 export type TextTone = 'default' | 'muted' | 'primary' | 'success' | 'warning' | 'error';
@@ -52,6 +52,11 @@ export interface ResumeBlock {
   profile: Profile;
 }
 
+export interface CertificatesBlock {
+  type: 'certificates';
+  certificates: Certificate[];
+}
+
 export interface BannerBlock {
   type: 'banner';
   profile: Profile;
@@ -69,6 +74,7 @@ export type OutputBlock =
   | ProjectBlock
   | ProfileBlock
   | ResumeBlock
+  | CertificatesBlock
   | BannerBlock;
 
 /** Uma "rodada" no histórico do terminal: prompt + comando + saída. */

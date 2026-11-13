@@ -9,6 +9,7 @@ import {
 } from '@angular/forms';
 
 import type {
+  Certificate,
   Education,
   Experience,
   Profile,
@@ -34,6 +35,13 @@ type EducationGroup = FormGroup<{
   institution: FormControl<string>;
   period: FormControl<string>;
 }>;
+type CertificateGroup = FormGroup<{
+  name: FormControl<string>;
+  issuer: FormControl<string>;
+  date: FormControl<string>;
+  url: FormControl<string>;
+  imageUrl: FormControl<string>;
+}>;
 
 /** Formulário de edição das informações pessoais e do currículo. */
 @Component({
@@ -58,6 +66,7 @@ export class ProfileForm {
     links: this.fb.array<LinkGroup>([]),
     experiences: this.fb.array<ExperienceGroup>([]),
     education: this.fb.array<EducationGroup>([]),
+    certificates: this.fb.array<CertificateGroup>([]),
   });
 
   protected readonly saving = signal(false);
@@ -78,6 +87,10 @@ export class ProfileForm {
 
   protected get education() {
     return this.form.controls.education;
+  }
+
+  protected get certificates() {
+    return this.form.controls.certificates;
   }
 
   protected addLink(link?: SocialLink): void {
@@ -106,6 +119,18 @@ export class ProfileForm {
         course: [item?.course ?? '', Validators.required],
         institution: [item?.institution ?? ''],
         period: [item?.period ?? ''],
+      }),
+    );
+  }
+
+  protected addCertificate(item?: Certificate): void {
+    this.certificates.push(
+      this.fb.group({
+        name: [item?.name ?? '', Validators.required],
+        issuer: [item?.issuer ?? ''],
+        date: [item?.date ?? ''],
+        url: [item?.url ?? '', urlValidator],
+        imageUrl: [item?.imageUrl ?? '', imageSourceValidator],
       }),
     );
   }
@@ -161,9 +186,11 @@ export class ProfileForm {
     this.links.clear();
     this.experiences.clear();
     this.education.clear();
+    this.certificates.clear();
     profile.links.forEach((link) => this.addLink(link));
     profile.experiences.forEach((item) => this.addExperience(item));
     profile.education.forEach((item) => this.addEducation(item));
+    profile.certificates.forEach((item) => this.addCertificate(item));
 
     this.form.patchValue({
       name: profile.name,
