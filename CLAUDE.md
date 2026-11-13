@@ -69,6 +69,30 @@ src/
   Se precisar de `@apply` em CSS de componente, o Tailwind 4 exige `@reference` ao `styles.css`.
 - Fonte: JetBrains Mono (Google Fonts, `index.html`). Inputs usam 16px no mobile (evita zoom no iOS).
 
+### Ícone
+
+- Prompt `>_` verde claro (`#7dffa0`) sobre quadrado escuro (`#0a100c`, borda `#2d4d37`).
+- `public/favicon.svg` é a **fonte**. Navegadores modernos o usam direto.
+- Derivados, todos linkados em `src/index.html`:
+  - `public/favicon.ico`: 16/32/48 px, para navegadores antigos.
+  - `public/apple-touch-icon.png`: 180 px, fundo inteiro sem cantos, porque o iOS aplica a máscara.
+- Se mudar o SVG, regenere os derivados. Uma forma é rasterizar a 512 px (ex.: Chrome headless) e reduzir com Pillow.
+
+### Compartilhamento (meta tags)
+
+- `src/index.html` tem as tags Open Graph (`og:*`) e X/Twitter (`twitter:*`, card
+  `summary_large_image`) e também `<link rel="canonical">`.
+- **Domínio:** `https://seu-dominio.com.br` é um placeholder. Troque em todas as ocorrências
+  antes do deploy. Os robôs exigem URL absoluta na imagem e na URL.
+- **Imagem:** `public/og-image.png`, 1200×630 PNG, ~160 KB. Mantenha abaixo de ~300 KB por
+  causa do WhatsApp. A arte é genérica, sem o nome, para não precisar refazê-la ao editar o perfil.
+- **Tags estáticas:** é uma SPA sem SSR, e os robôs de redes sociais não executam JavaScript.
+  Por isso as tags são fixas e iguais em todas as rotas. Uma prévia por projeto exigiria SSR
+  ou prerender (`@angular/ssr`).
+- **Testar depois do deploy:** use o Sharing Debugger do Facebook, o Post Inspector do
+  LinkedIn ou um envio de teste no WhatsApp. Esses serviços guardam a prévia em cache, então
+  peça para "recarregar"/"scrape again" depois de mudar alguma coisa.
+
 ## Comandos do terminal
 
 | Comando | Apelidos | Descrição |
