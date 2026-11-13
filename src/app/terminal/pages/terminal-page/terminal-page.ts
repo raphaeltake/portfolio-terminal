@@ -12,6 +12,7 @@ import {
 
 import { TERMINAL_CONFIG } from '../../../core/config/terminal.config';
 import { TerminalWindow } from '../../../shared/components/terminal-window/terminal-window';
+import { ViewToggle } from '../../../shared/components/view-toggle/view-toggle';
 import { PromptInput } from '../../components/prompt-input/prompt-input';
 import { TerminalOutput } from '../../components/terminal-output/terminal-output';
 import { TerminalSession } from '../../services/terminal-session';
@@ -21,7 +22,7 @@ import { VirtualFileSystem } from '../../services/virtual-file-system';
 @Component({
   selector: 'app-terminal-page',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [TerminalWindow, TerminalOutput, PromptInput],
+  imports: [TerminalWindow, TerminalOutput, PromptInput, ViewToggle],
   templateUrl: './terminal-page.html',
 })
 export class TerminalPage {

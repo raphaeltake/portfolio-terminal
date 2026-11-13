@@ -10,6 +10,11 @@ export const routes: Routes = [
       import('./terminal/pages/terminal-page/terminal-page').then((m) => m.TerminalPage),
   },
   {
+    path: 'gui',
+    title: 'Modo gráfico · Portfolio Terminal',
+    loadComponent: () => import('./gui/pages/gui-page/gui-page').then((m) => m.GuiPage),
+  },
+  {
     path: 'login',
     title: 'Login · Portfolio Terminal',
     canActivate: [guestGuard],

@@ -30,9 +30,10 @@ src/
 ├── testing/                    # fixtures de teste (repositório em memória)
 └── app/
     ├── app.config.ts           # providers: repositório, auth, carregamento inicial
-    ├── app.routes.ts           # '' terminal · /login · /admin (protegida)
+    ├── app.routes.ts           # '' terminal · /gui modo gráfico · /login · /admin (protegida)
     ├── core/                   # regras de negócio, sem UI
     │   ├── config/             # terminal.config.ts (prompt, chaves), admin.config.ts (credenciais)
+    │   ├── navigation/         # ViewSwitcher: alterna terminal ↔ modo gráfico (Ctrl+F1)
     │   ├── models/             # Profile, Project, PortfolioData, OutputBlock, TerminalEntry
     │   ├── data/               # PortfolioRepository (abstrato) + LocalStorage + normalizador
     │   ├── auth/               # AuthService (abstrato) + LocalAuthService + guards
@@ -40,7 +41,8 @@ src/
     │   └── utils/              # slugify, levenshtein, sha256, imagem → data URL...
     ├── shared/                 # reutilizável em qualquer feature
     │   ├── components/         # terminal-window, project-card, form-field, image-input,
-    │   │                       # prompt-label, command-chip, confirm-button, feedback-message
+    │   │                       # prompt-label, command-chip, confirm-button, feedback-message,
+    │   │                       # view-toggle
     │   ├── directives/         # autofocus
     │   └── utils/              # Feedback (estado de mensagens), validadores e mensagens de erro
     ├── terminal/               # feature: o terminal
@@ -49,6 +51,7 @@ src/
     │   ├── components/         # terminal-output, output-block, prompt-input, views de saída
     │   ├── output.ts           # fábrica `Out` + conteúdos compartilhados (sobre, contato...)
     │   └── pages/terminal-page
+    ├── gui/                    # feature: modo gráfico (pages/gui-page), mesmo conteúdo sem comandos
     └── admin/                  # feature: login + painel
         ├── pages/              # login-page, admin-page (abas perfil / projetos / dados)
         └── components/         # profile-form, projects-manager, project-form, data-backup
@@ -110,6 +113,19 @@ src/
 
 Atalhos: `Tab` autocompleta (comandos, caminhos e slugs), `↑/↓` histórico, `Ctrl+L` limpa,
 `Ctrl+C` cancela a linha.
+
+### Modo gráfico (`/gui`)
+
+- **`Ctrl+F1`** ou o botão `app-view-toggle` (na barra da janela do terminal e no topo da GUI)
+  alternam terminal ↔ modo gráfico. O atalho é tratado no `App` (`document:keydown`) e
+  delegado ao `ViewSwitcher` (`core/navigation/view-switcher.ts`).
+- O atalho **não age** em `/login` e `/admin`, para não tirar o admin de um formulário.
+- O `TerminalSession` é `providedIn: 'root'`, então a saída e o histórico do terminal
+  continuam lá ao voltar da GUI.
+- A GUI lê o mesmo `PortfolioStore` e reutiliza `app-project-card`. O efeito `.crt-overlay`
+  fica desligado nela.
+- Navegação interna da GUI usa `scrollIntoView`, **não** `href="#secao"`: com
+  `<base href="/">` o link resolveria para `/#secao` e voltaria ao terminal.
 
 ### Sistema de arquivos virtual
 

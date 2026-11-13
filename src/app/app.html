@@ -1,3 +1,5 @@
 <router-outlet />
-<!-- Efeito decorativo de monitor CRT -->
-<div class="crt-overlay" aria-hidden="true"></div>
+@if (switcher.current() !== 'gui') {
+  <!-- Efeito decorativo de monitor CRT (só nas telas em estilo terminal) -->
+  <div class="crt-overlay" aria-hidden="true"></div>
+}
