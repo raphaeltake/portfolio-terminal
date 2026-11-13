@@ -1,0 +1,32 @@
+<main class="flex min-h-dvh items-center justify-center p-4">
+  <app-terminal-window class="w-full max-w-lg" title="login — tty1">
+    <form class="space-y-5 p-5 sm:p-6" [formGroup]="form" (ngSubmit)="submit()" novalidate>
+      <div class="space-y-1 text-sm">
+        <h1 class="glow font-bold text-primary">Portfolio Terminal — área restrita</h1>
+        <p class="text-muted">Autentique-se para editar suas informações e projetos.</p>
+      </div>
+
+      <app-form-field label="login" [error]="errorOf(form.controls.username)">
+        <input class="input" formControlName="username" autocomplete="username" appAutofocus />
+      </app-form-field>
+
+      <app-form-field label="senha" [error]="errorOf(form.controls.password)">
+        <input
+          class="input"
+          type="password"
+          formControlName="password"
+          autocomplete="current-password"
+        />
+      </app-form-field>
+
+      <app-feedback-message [message]="feedback.message()" />
+
+      <div class="flex flex-wrap items-center justify-between gap-3 pt-1">
+        <a class="btn" routerLink="/">← voltar ao terminal</a>
+        <button class="btn btn-primary" type="submit" [disabled]="loading()">
+          {{ loading() ? 'verificando...' : 'entrar' }}
+        </button>
+      </div>
+    </form>
+  </app-terminal-window>
+</main>

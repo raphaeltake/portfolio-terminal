@@ -1,0 +1,4 @@
+Comando para colocar uma barra no bottom com os comandos para o usuário clicar (semelhante ao do banner).
+Salvar no backend o arquivo do currículo - não usar link
+Tirar a obrigatoriedade do link do projeto
+Colocar opção para selecionar lingua (inglês/português)

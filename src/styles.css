@@ -1,3 +1,367 @@
-/* You can add global styles to this file, and also import other style files */
-
+/*
+ * Estilos globais do Portfolio Terminal.
+ *
+ * - `@theme`: tokens de design (cores, fontes). Geram utilitários Tailwind,
+ *   ex.: `text-primary`, `bg-surface`, `border-line`.
+ * - `@layer components`: classes reutilizáveis (botões, inputs, painéis...).
+ *   Use essas classes nos templates em vez de repetir utilitários.
+ */
 @import 'tailwindcss';
+
+@theme {
+  --font-mono:
+    'JetBrains Mono', 'Fira Code', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  /* Fundo e superfícies (tema escuro) */
+  --color-base: #050806;
+  --color-surface: #0a100c;
+  --color-elevated: #0f1812;
+  --color-line: #1c2e22;
+  --color-line-strong: #2d4d37;
+
+  /* Texto */
+  --color-ink: #d4f7dd;
+  --color-muted: #7c9886;
+
+  /* Cor primária: verde claro */
+  --color-primary: #7dffa0;
+  --color-primary-strong: #b0ffc4;
+  --color-primary-dim: #3fae63;
+
+  /* Cores de apoio */
+  --color-info: #7cc8ff;
+  --color-warning: #ffd36e;
+  --color-danger: #ff7070;
+}
+
+@layer base {
+  html,
+  body {
+    height: 100%;
+  }
+
+  body {
+    margin: 0;
+    background-color: var(--color-base);
+    color: var(--color-ink);
+    font-family: var(--font-mono);
+    font-size: 15px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection {
+    background: var(--color-primary);
+    color: var(--color-base);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
+  /* Scrollbar no estilo terminal */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-line-strong) transparent;
+  }
+}
+
+@layer components {
+  /* ---------- Efeitos ---------- */
+  .glow {
+    text-shadow: 0 0 8px color-mix(in srgb, var(--color-primary) 55%, transparent);
+  }
+
+  /* Linhas de varredura de monitor CRT (sobreposição decorativa) */
+  .crt-overlay {
+    pointer-events: none;
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    background: repeating-linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent 2px,
+      rgb(0 0 0 / 0.18) 3px
+    );
+    mix-blend-mode: multiply;
+  }
+
+  .cursor-blink {
+    display: inline-block;
+    width: 0.6em;
+    height: 1.1em;
+    vertical-align: text-bottom;
+    background: var(--color-primary);
+    animation: cursor-blink 1s steps(1) infinite;
+  }
+
+  /* ---------- Tipografia ---------- */
+  .section-title {
+    color: var(--color-primary);
+    font-weight: 700;
+    letter-spacing: 0.02em;
+  }
+
+  .section-title::before {
+    content: '## ';
+    color: var(--color-primary-dim);
+  }
+
+  .ascii-art {
+    color: var(--color-primary);
+    font-size: clamp(5px, 1.55vw, 13px);
+    line-height: 1.15;
+    white-space: pre;
+    overflow-x: auto;
+  }
+
+  .link {
+    color: var(--color-info);
+    text-decoration: underline;
+    text-decoration-color: color-mix(in srgb, var(--color-info) 40%, transparent);
+    text-underline-offset: 3px;
+    word-break: break-word;
+  }
+
+  .link:hover {
+    color: var(--color-primary);
+    text-decoration-color: var(--color-primary);
+  }
+
+  /* ---------- Superfícies ---------- */
+  .panel {
+    border: 1px solid var(--color-line);
+    background: var(--color-surface);
+    border-radius: 6px;
+  }
+
+  .panel-elevated {
+    border: 1px solid var(--color-line-strong);
+    background: var(--color-elevated);
+    border-radius: 6px;
+  }
+
+  /* ---------- Botões ---------- */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    padding: 0.45rem 0.9rem;
+    border: 1px solid var(--color-line-strong);
+    border-radius: 4px;
+    background: transparent;
+    color: var(--color-ink);
+    font: inherit;
+    font-size: 0.875rem;
+    line-height: 1.2;
+    cursor: pointer;
+    text-decoration: none;
+    transition:
+      background-color 0.15s ease,
+      color 0.15s ease,
+      border-color 0.15s ease;
+  }
+
+  .btn:hover:not(:disabled) {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+  }
+
+  .btn:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+
+  .btn-primary {
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+    color: var(--color-base);
+    font-weight: 700;
+  }
+
+  .btn-primary:hover:not(:disabled) {
+    background: var(--color-primary-strong);
+    border-color: var(--color-primary-strong);
+    color: var(--color-base);
+  }
+
+  .btn-danger {
+    border-color: color-mix(in srgb, var(--color-danger) 50%, transparent);
+    color: var(--color-danger);
+  }
+
+  .btn-danger:hover:not(:disabled) {
+    background: var(--color-danger);
+    border-color: var(--color-danger);
+    color: var(--color-base);
+  }
+
+  .btn-sm {
+    padding: 0.25rem 0.6rem;
+    font-size: 0.8rem;
+  }
+
+  /* Aba ativa/inativa: [ perfil ] */
+  .tab {
+    padding: 0.35rem 0.75rem;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    color: var(--color-muted);
+    background: transparent;
+    font: inherit;
+    cursor: pointer;
+  }
+
+  .tab:hover {
+    color: var(--color-ink);
+  }
+
+  .tab-active {
+    color: var(--color-primary);
+    border-color: var(--color-line-strong);
+    background: var(--color-elevated);
+  }
+
+  /* Chip de comando clicável: $ help */
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.15rem 0.6rem;
+    border: 1px dashed var(--color-line-strong);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--color-primary);
+    font: inherit;
+    font-size: 0.85rem;
+    cursor: pointer;
+  }
+
+  .chip:hover {
+    border-style: solid;
+    border-color: var(--color-primary);
+    background: color-mix(in srgb, var(--color-primary) 10%, transparent);
+  }
+
+  .tag {
+    display: inline-block;
+    padding: 0.05rem 0.5rem;
+    border: 1px solid var(--color-line-strong);
+    border-radius: 3px;
+    color: var(--color-primary);
+    font-size: 0.78rem;
+  }
+
+  /* ---------- Formulários ---------- */
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+  .field-label {
+    color: var(--color-muted);
+    font-size: 0.8rem;
+  }
+
+  .field-label::before {
+    content: '> ';
+    color: var(--color-primary-dim);
+  }
+
+  .field-hint {
+    color: var(--color-muted);
+    font-size: 0.75rem;
+  }
+
+  .field-error {
+    color: var(--color-danger);
+    font-size: 0.75rem;
+  }
+
+  .input {
+    width: 100%;
+    padding: 0.5rem 0.65rem;
+    border: 1px solid var(--color-line-strong);
+    border-radius: 4px;
+    background: var(--color-base);
+    color: var(--color-ink);
+    font: inherit;
+    font-size: 16px; /* evita zoom automático no iOS */
+    caret-color: var(--color-primary);
+  }
+
+  .input::placeholder {
+    color: color-mix(in srgb, var(--color-muted) 60%, transparent);
+  }
+
+  .input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 1px var(--color-primary);
+  }
+
+  .input.ng-invalid.ng-touched {
+    border-color: var(--color-danger);
+  }
+
+  textarea.input {
+    min-height: 6rem;
+    resize: vertical;
+  }
+
+  /* ---------- Mensagens ---------- */
+  .alert {
+    padding: 0.5rem 0.75rem;
+    border-left: 3px solid var(--color-primary);
+    background: color-mix(in srgb, var(--color-primary) 8%, transparent);
+    font-size: 0.85rem;
+  }
+
+  .alert-error {
+    border-left-color: var(--color-danger);
+    background: color-mix(in srgb, var(--color-danger) 10%, transparent);
+    color: var(--color-danger);
+  }
+
+  .alert-warning {
+    border-left-color: var(--color-warning);
+    background: color-mix(in srgb, var(--color-warning) 8%, transparent);
+    color: var(--color-warning);
+  }
+
+  /* ---------- Tons de texto do terminal ---------- */
+  .tone-default {
+    color: var(--color-ink);
+  }
+  .tone-muted {
+    color: var(--color-muted);
+  }
+  .tone-primary {
+    color: var(--color-primary);
+  }
+  .tone-success {
+    color: var(--color-primary-strong);
+  }
+  .tone-warning {
+    color: var(--color-warning);
+  }
+  .tone-error {
+    color: var(--color-danger);
+  }
+}
+
+@keyframes cursor-blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cursor-blink {
+    animation: none;
+  }
+}

@@ -1,0 +1,65 @@
+<form class="space-y-6" [formGroup]="form" (ngSubmit)="save()" novalidate>
+  <div class="flex flex-wrap items-center justify-between gap-3">
+    <h2 class="section-title">{{ isNew() ? 'novo projeto' : 'editar projeto' }}</h2>
+    <button type="button" class="btn btn-sm" (click)="cancelled.emit()">← voltar à lista</button>
+  </div>
+
+  <div class="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,22rem)]">
+    <div class="space-y-4">
+      <app-form-field label="título" [error]="errorOf(form.controls.title)">
+        <input class="input" formControlName="title" />
+      </app-form-field>
+
+      <app-form-field
+        label="nome no terminal (slug)"
+        hint="Usado em: visualizar-projeto <slug>. Só letras minúsculas, números e hífens."
+        [error]="errorOf(form.controls.slug)"
+      >
+        <input
+          class="input"
+          formControlName="slug"
+          (input)="onSlugInput()"
+          (blur)="normalizeSlug()"
+        />
+      </app-form-field>
+
+      <app-form-field label="descrição" [error]="errorOf(form.controls.description)">
+        <textarea class="input" rows="6" formControlName="description"></textarea>
+      </app-form-field>
+
+      <div class="field">
+        <span class="field-label">imagem</span>
+        <app-image-input formControlName="imageUrl" />
+        @if (errorOf(form.controls.imageUrl); as error) {
+          <span class="field-error">{{ error }}</span>
+        }
+      </div>
+
+      <div class="grid gap-4 sm:grid-cols-2">
+        <app-form-field label="link do projeto" [error]="errorOf(form.controls.link)">
+          <input class="input" formControlName="link" placeholder="https://..." />
+        </app-form-field>
+        <app-form-field label="repositório (opcional)" [error]="errorOf(form.controls.repoUrl)">
+          <input class="input" formControlName="repoUrl" placeholder="https://github.com/..." />
+        </app-form-field>
+      </div>
+
+      <app-form-field label="tecnologias" hint="Separe por vírgula: Angular, Tailwind, Firebase">
+        <input class="input" formControlName="tags" />
+      </app-form-field>
+    </div>
+
+    <aside class="space-y-2">
+      <p class="field-label">pré-visualização</p>
+      <app-project-card [project]="preview()" />
+    </aside>
+  </div>
+
+  <div class="flex flex-wrap items-center justify-end gap-3 border-t border-line pt-4">
+    <app-feedback-message class="mr-auto" [message]="feedback.message()" />
+    <button type="button" class="btn" (click)="cancelled.emit()">cancelar</button>
+    <button type="submit" class="btn btn-primary" [disabled]="saving()">
+      {{ saving() ? 'salvando...' : isNew() ? 'criar projeto' : 'salvar alterações' }}
+    </button>
+  </div>
+</form>

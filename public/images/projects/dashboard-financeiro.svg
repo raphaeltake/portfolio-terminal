@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" font-family="ui-monospace, Menlo, Consolas, monospace">
+  <rect width="640" height="360" fill="#050806"/>
+  <rect x="16" y="16" width="608" height="328" rx="8" fill="#0a100c" stroke="#2d4d37"/>
+  <rect x="16" y="16" width="608" height="36" rx="8" fill="#0f1812"/>
+  <rect x="16" y="44" width="608" height="8" fill="#0f1812"/>
+  <circle cx="40" cy="34" r="6" fill="#ff7070"/>
+  <circle cx="60" cy="34" r="6" fill="#ffd36e"/>
+  <circle cx="80" cy="34" r="6" fill="#7dffa0"/>
+  <text x="320" y="39" fill="#7c9886" font-size="13" text-anchor="middle">~/projetos/dashboard-financeiro</text>
+  <g font-size="22">
+    <text x="40" y="150" fill="#ffd36e">$ npm run dashboard</text>
+    <text x="40" y="194" fill="#d4f7dd">receitas  ████████░░ 80%</text>
+    <text x="40" y="238" fill="#d4f7dd">despesas  █████░░░░░ 50%</text>
+  </g>
+  <rect x="40" y="264" width="12" height="22" fill="#ffd36e"/>
+</svg>

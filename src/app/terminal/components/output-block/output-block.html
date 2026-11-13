@@ -1,0 +1,88 @@
+@let b = block();
+@switch (b.type) {
+  @case ('text') {
+    <p class="break-words whitespace-pre-wrap" [class]="'tone-' + b.tone">{{ b.text }}</p>
+  }
+
+  @case ('list') {
+    @if (b.layout === 'inline') {
+      <ul class="flex flex-wrap gap-x-6 gap-y-1">
+        @for (item of b.items; track $index) {
+          <li>
+            @if (item.command) {
+              <button
+                type="button"
+                class="cursor-pointer hover:underline"
+                [class]="kindClass(item.kind)"
+                [title]="item.command"
+                (click)="run.emit(item.command)"
+              >
+                {{ item.label }}
+              </button>
+            } @else {
+              <span [class]="kindClass(item.kind)">{{ item.label }}</span>
+            }
+          </li>
+        }
+      </ul>
+    } @else {
+      <dl class="grid gap-x-6 sm:grid-cols-[max-content_1fr]">
+        @for (item of b.items; track $index) {
+          <dt>
+            @if (item.command) {
+              <button
+                type="button"
+                class="cursor-pointer text-left hover:underline"
+                [class]="kindClass(item.kind)"
+                (click)="run.emit(item.command)"
+              >
+                {{ item.label }}
+              </button>
+            } @else {
+              <span [class]="kindClass(item.kind)">{{ item.label }}</span>
+            }
+          </dt>
+          <dd class="mb-1 pl-4 text-muted sm:mb-0 sm:pl-0">{{ item.description }}</dd>
+        }
+      </dl>
+    }
+  }
+
+  @case ('links') {
+    <ul class="space-y-0.5">
+      @for (link of b.links; track link.url) {
+        <li>
+          <span class="inline-block min-w-24 text-muted">{{ link.label }}</span>
+          <a class="link" [href]="link.url" target="_blank" rel="noopener noreferrer">{{
+            displayUrl(link.url)
+          }}</a>
+        </li>
+      }
+    </ul>
+  }
+
+  @case ('commands') {
+    <div class="flex flex-wrap items-center gap-2">
+      <span class="text-muted">{{ b.label }}</span>
+      @for (command of b.commands; track command) {
+        <app-command-chip [command]="command" (run)="run.emit($event)" />
+      }
+    </div>
+  }
+
+  @case ('project') {
+    <app-project-card class="my-1" [project]="b.project" />
+  }
+
+  @case ('profile') {
+    <app-profile-view [profile]="b.profile" />
+  }
+
+  @case ('resume') {
+    <app-resume-view [profile]="b.profile" />
+  }
+
+  @case ('banner') {
+    <app-welcome-banner [profile]="b.profile" (run)="run.emit($event)" />
+  }
+}

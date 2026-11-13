@@ -1,0 +1,16 @@
+<main class="flex h-dvh flex-col p-2 sm:p-4">
+  <h1 class="sr-only">Portfólio em formato de terminal</h1>
+  <app-terminal-window class="mx-auto w-full max-w-5xl flex-1" [title]="title()">
+    <div
+      #scroller
+      class="min-h-0 flex-1 cursor-text overflow-y-auto p-3 sm:p-5"
+      (scroll)="onScroll()"
+      (click)="focusPrompt($event)"
+    >
+      <div #content>
+        <app-terminal-output [entries]="session.entries()" (run)="run($event)" />
+        <app-prompt-input [path]="fs.displayCwd()" />
+      </div>
+    </div>
+  </app-terminal-window>
+</main>

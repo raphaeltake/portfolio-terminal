@@ -1,0 +1,49 @@
+<main class="flex h-dvh flex-col p-2 sm:p-4">
+  <app-terminal-window class="mx-auto w-full max-w-5xl flex-1" [title]="title">
+    <div
+      class="flex flex-wrap items-center justify-between gap-3 border-b border-line px-3 py-2 sm:px-5"
+    >
+      <nav class="flex flex-wrap gap-1" role="tablist" aria-label="Seções do painel">
+        @for (tab of tabs; track tab.id) {
+          <button
+            type="button"
+            role="tab"
+            class="tab"
+            [class.tab-active]="activeTab() === tab.id"
+            [attr.aria-selected]="activeTab() === tab.id"
+            (click)="activeTab.set(tab.id)"
+          >
+            [ {{ tab.label }} ]
+          </button>
+        }
+      </nav>
+      <div class="flex items-center gap-2 text-sm">
+        <span class="hidden text-muted sm:inline">
+          logado como <span class="text-primary">{{ auth.username() }}</span>
+        </span>
+        <a class="btn btn-sm" routerLink="/">terminal</a>
+        <button type="button" class="btn btn-sm btn-danger" (click)="logout()">sair</button>
+      </div>
+    </div>
+
+    <div class="min-h-0 flex-1 overflow-y-auto p-4 sm:p-6" role="tabpanel">
+      <h1 class="sr-only">Painel administrativo</h1>
+      <p class="mb-6 text-xs text-muted">
+        <span class="text-warning">!</span> As alterações ficam salvas neste navegador. Para
+        publicá-las, use a aba
+        <button type="button" class="link" (click)="activeTab.set('dados')">[ dados ]</button>.
+      </p>
+      @switch (activeTab()) {
+        @case ('perfil') {
+          <app-profile-form />
+        }
+        @case ('projetos') {
+          <app-projects-manager />
+        }
+        @case ('dados') {
+          <app-data-backup />
+        }
+      }
+    </div>
+  </app-terminal-window>
+</main>

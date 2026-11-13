@@ -1,0 +1,93 @@
+{
+  "version": 1,
+  "profile": {
+    "name": "Seu Nome",
+    "role": "Desenvolvedor(a) Full Stack",
+    "location": "Brasil",
+    "email": "voce@exemplo.com",
+    "bio": "Olá! Este é o texto de apresentação do seu portfólio.\nConte quem você é, o que faz e o que te motiva.",
+    "avatarUrl": "",
+    "resumeUrl": "",
+    "skills": [
+      "TypeScript",
+      "Angular",
+      "Node.js",
+      "Tailwind CSS",
+      "Git"
+    ],
+    "links": [
+      {
+        "label": "GitHub",
+        "url": "https://github.com/"
+      },
+      {
+        "label": "LinkedIn",
+        "url": "https://www.linkedin.com/"
+      }
+    ],
+    "experiences": [
+      {
+        "role": "Desenvolvedor(a) Full Stack",
+        "company": "Empresa Exemplo",
+        "period": "2023 — atual",
+        "description": "Descreva aqui suas responsabilidades e conquistas."
+      },
+      {
+        "role": "Desenvolvedor(a) Front-end",
+        "company": "Outra Empresa",
+        "period": "2021 — 2023",
+        "description": "Interfaces responsivas, componentização e testes."
+      }
+    ],
+    "education": [
+      {
+        "course": "Ciência da Computação",
+        "institution": "Universidade Exemplo",
+        "period": "2017 — 2021"
+      }
+    ]
+  },
+  "projects": [
+    {
+      "id": "seed-portfolio-terminal",
+      "slug": "portfolio-terminal",
+      "title": "Portfolio Terminal",
+      "description": "Este próprio site: um portfólio interativo em formato de terminal, feito com Angular e Tailwind CSS. Possui sistema de arquivos virtual, autocompletar e painel de edição.",
+      "imageUrl": "images/projects/portfolio-terminal.svg",
+      "link": "https://example.com/",
+      "repoUrl": "https://github.com/",
+      "tags": [
+        "Angular",
+        "TypeScript",
+        "Tailwind"
+      ]
+    },
+    {
+      "id": "seed-api-tarefas",
+      "slug": "api-tarefas",
+      "title": "API de Tarefas",
+      "description": "API REST para gerenciamento de tarefas com autenticação JWT, paginação e documentação OpenAPI.",
+      "imageUrl": "images/projects/api-tarefas.svg",
+      "link": "https://example.com/",
+      "repoUrl": "",
+      "tags": [
+        "Node.js",
+        "Express",
+        "PostgreSQL"
+      ]
+    },
+    {
+      "id": "seed-dashboard-financeiro",
+      "slug": "dashboard-financeiro",
+      "title": "Dashboard Financeiro",
+      "description": "Painel para acompanhar receitas e despesas com gráficos, filtros por período e exportação em CSV.",
+      "imageUrl": "images/projects/dashboard-financeiro.svg",
+      "link": "https://example.com/",
+      "repoUrl": "",
+      "tags": [
+        "Angular",
+        "Chart.js"
+      ]
+    }
+  ]
+}
